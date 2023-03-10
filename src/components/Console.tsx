@@ -13,11 +13,11 @@ export default function Console() {
           bottom: 10,
           width: "70%",
           left: 0,
-          right: 0,
+          right: 20,
           margin: "auto",
         }}
       >
-        <Grid item xs={6}>
+        <Grid item xs={12} sm={6}>
           <Typography
             align="center"
             color={"white"}
@@ -25,9 +25,9 @@ export default function Console() {
           >
             Rain Effect
           </Typography>
-          <Player />
+          <Player musicSrc="/rain.mp3" />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12} sm={6}>
           <Typography
             align="center"
             color={"white"}
@@ -35,7 +35,7 @@ export default function Console() {
           >
             Music
           </Typography>
-          <Player />
+          <Player musicSrc="/lofi.mp3" />
         </Grid>
       </Grid>
     </Box>
