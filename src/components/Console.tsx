@@ -10,7 +10,7 @@ export default function Console() {
         spacing={4}
         sx={{
           position: "absolute",
-          bottom: 10,
+          bottom: 80,
           width: "70%",
           left: 0,
           right: 20,
@@ -25,7 +25,7 @@ export default function Console() {
           >
             Rain Effect
           </Typography>
-          <Player musicSrc="/rain.mp3" />
+          <Player musicSrc="rain.mp3" />
         </Grid>
         <Grid item xs={12} sm={6}>
           <Typography
@@ -35,7 +35,7 @@ export default function Console() {
           >
             Music
           </Typography>
-          <Player musicSrc="/lofi.mp3" />
+          <Player musicSrc="lofi.mp3" />
         </Grid>
       </Grid>
     </Box>

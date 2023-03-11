@@ -8,15 +8,22 @@ import {
   VolumeMute,
 } from "@mui/icons-material";
 import { Stack, Slider, Grid } from "@mui/material";
+import { getDownloadURL, ref } from "firebase/storage";
+import storage from "@/firebase/config";
 
 export default function Player({ musicSrc }: { musicSrc: string }) {
   const audioPlayer = useRef<HTMLAudioElement>(null);
   const [volume, setVolume] = useState<number>(40);
-  const [play, setPlay] = useState<boolean>(true);
+  const [play, setPlay] = useState<boolean>(false);
+  const [lofi, setLofi] = useState<string>("");
 
   const handleChange = (_event: Event, newValue: number | number[]) => {
     setVolume(newValue as number);
   };
+
+  getDownloadURL(ref(storage, musicSrc)).then((url) => {
+    setLofi(url);
+  });
 
   const changePlay = () => {
     if (play && audioPlayer.current) {
@@ -35,7 +42,7 @@ export default function Player({ musicSrc }: { musicSrc: string }) {
 
   return (
     <Grid>
-      <audio src={musicSrc} ref={audioPlayer} autoPlay loop>
+      <audio src={lofi} ref={audioPlayer} loop>
         Browser does not support audio
       </audio>
       <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
