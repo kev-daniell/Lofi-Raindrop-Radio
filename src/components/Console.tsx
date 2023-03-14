@@ -18,7 +18,7 @@ export default function Console({ cb }: { cb: Function }) {
         spacing={4}
         sx={{
           position: "absolute",
-          bottom: 10,
+          bottom: 80,
           width: "70%",
           left: 0,
           right: 20,
@@ -33,7 +33,7 @@ export default function Console({ cb }: { cb: Function }) {
           >
             Rain Effect
           </Typography>
-          <Player musicSrc="/rain.mp3" />
+          <Player musicSrc="rain.mp3" />
         </Grid>
         <Grid item xs={12} sm={5}>
           <Typography
@@ -43,7 +43,7 @@ export default function Console({ cb }: { cb: Function }) {
           >
             Music
           </Typography>
-          <Player musicSrc="/lofi.mp3" />
+          <Player musicSrc="lofi.mp3" />
         </Grid>
         <Grid item xs={12} sm={2}>
           <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
