@@ -33,14 +33,14 @@ export default function Navbar() {
             Lofi Raindrop Radio
           </Typography>
 
-          <Box>
+          <Box display={"flex"} justifyContent={"center"}>
             <Typography
               variant="h5"
+              textAlign={"center"}
               noWrap
               component="a"
               href="/"
               sx={{
-                mr: 2,
                 display: { xs: "flex", md: "none" },
                 flexGrow: 1,
                 fontFamily: "monospace",
