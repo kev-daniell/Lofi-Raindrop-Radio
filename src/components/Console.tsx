@@ -51,6 +51,16 @@ export default function Console({ cb }: { cb: Function }) {
     }
   }, [lofiPlay, rainPlay]);
 
+  useEffect(() => {
+    if (lofiPlayer && lofiPlayer.current) {
+      lofiPlayer.current.volume = (lofiVolume / 100) * (masterVolume / 100);
+    }
+
+    if (rainPlayer && rainPlayer.current) {
+      rainPlayer.current.volume = (rainVolume / 100) * (masterVolume / 100);
+    }
+  }, [rainPlayer, lofiPlayer, masterVolume, rainVolume, lofiVolume]);
+
   const handleOpen =
     (newPlacement: PopperPlacementType) =>
     (event: React.MouseEvent<HTMLButtonElement>) => {
