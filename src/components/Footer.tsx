@@ -24,7 +24,14 @@ export default function Footer() {
           }}
         >
           <Typography sx={{ color: "grey", fontFamily: "monospace" }}>
-            Made with ♡ by kev-daniell
+            Made with ♡ by{" "}
+            <a
+              style={{ color: "grey" }}
+              target="_blank"
+              href="https://github.com/kev-daniell"
+            >
+              kev-daniell
+            </a>
           </Typography>
         </Box>
 
@@ -41,7 +48,11 @@ export default function Footer() {
             sx={{ color: "grey", fontFamily: "monospace" }}
           >
             Inspired By{" "}
-            <a style={{ color: "grey" }} href="http://www.soundsofhome.ca">
+            <a
+              style={{ color: "grey" }}
+              target="_blank"
+              href="http://www.soundsofhome.ca"
+            >
               SoundsOfHome
             </a>
           </Typography>

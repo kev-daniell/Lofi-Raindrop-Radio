@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
 import {
@@ -8,51 +8,61 @@ import {
   VolumeMute,
 } from "@mui/icons-material";
 import { Stack, Slider, Grid } from "@mui/material";
-import { getDownloadURL, ref } from "firebase/storage";
-import storage from "@/firebase/config";
 
-export default function Player({ musicSrc }: { musicSrc: string }) {
-  const audioPlayer = useRef<HTMLAudioElement>(null);
-  const [volume, setVolume] = useState<number>(40);
-  const [play, setPlay] = useState<boolean>(false);
-  const [lofi, setLofi] = useState<string>("");
-
+export default function Player({
+  play,
+  setPlay,
+  volume,
+  setVolume,
+  rainPlayer,
+  lofiPlayer,
+  setRainPlay,
+  setLofiPlay,
+}: {
+  play: boolean;
+  setPlay: Function;
+  volume: number;
+  setVolume: Function;
+  rainPlayer: React.RefObject<HTMLAudioElement>;
+  lofiPlayer: React.RefObject<HTMLAudioElement>;
+  setRainPlay: Function;
+  setLofiPlay: Function;
+}) {
   const handleChange = (_event: Event, newValue: number | number[]) => {
     setVolume(newValue as number);
   };
 
-  getDownloadURL(ref(storage, musicSrc)).then((url) => {
-    setLofi(url);
-  });
-
   const changePlay = () => {
-    if (play && audioPlayer.current) {
-      audioPlayer.current.pause();
-    } else if (audioPlayer.current) {
-      audioPlayer.current.play();
-    }
-    setPlay((prev) => !prev);
-  };
+    setLofiPlay(!play);
+    setRainPlay(!play);
 
-  useEffect(() => {
-    if (audioPlayer && audioPlayer.current) {
-      audioPlayer.current.volume = volume / 100;
+    if (play && lofiPlayer.current) {
+      lofiPlayer.current.pause();
+    } else if (lofiPlayer.current) {
+      lofiPlayer.current.play();
     }
-  }, [volume]);
+    if (play && rainPlayer.current) {
+      rainPlayer.current.pause();
+    } else if (rainPlayer.current) {
+      rainPlayer.current.play();
+    }
+    setPlay((prev: boolean) => !prev);
+  };
 
   return (
     <Grid>
-      <audio src={lofi} ref={audioPlayer} loop>
-        Browser does not support audio
-      </audio>
       <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
         {!play ? (
           <div onClick={changePlay}>
-            <PlayArrowIcon sx={{ fontSize: 40, color: "white" }} />
+            <PlayArrowIcon
+              sx={{ fontSize: 40, color: "white", cursor: "pointer" }}
+            />
           </div>
         ) : (
           <div onClick={changePlay}>
-            <PauseIcon sx={{ fontSize: 40, color: "white" }} />
+            <PauseIcon
+              sx={{ fontSize: 40, color: "white", cursor: "pointer" }}
+            />
           </div>
         )}
 
