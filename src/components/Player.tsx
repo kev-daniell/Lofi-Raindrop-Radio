@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
 import {
@@ -7,7 +7,7 @@ import {
   VolumeOff,
   VolumeMute,
 } from "@mui/icons-material";
-import { Stack, Slider, Grid } from "@mui/material";
+import { Stack, Slider, Grid, Box, Typography } from "@mui/material";
 
 export default function Player({
   play,
@@ -48,7 +48,6 @@ export default function Player({
     }
     setPlay((prev: boolean) => !prev);
   };
-
   return (
     <Grid>
       <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
@@ -65,18 +64,33 @@ export default function Player({
             />
           </div>
         )}
-
-        {volume === 0 && <VolumeOff sx={{ color: "white" }} />}
-        {volume <= 33 && volume > 0 && <VolumeMute sx={{ color: "white" }} />}
-        {volume > 33 && volume <= 66 && <VolumeDown sx={{ color: "white" }} />}
-        {volume > 66 && <VolumeUp sx={{ color: "white" }} />}
-        <Slider
-          aria-label="Volume"
-          min={0}
-          max={100}
-          value={volume}
-          onChange={handleChange}
-        />
+        <Box display={{ sm: "none" }}>
+          <Typography
+            align="center"
+            color={"white"}
+            sx={{
+              fontFamily: "monospace",
+              fontSize: "1rem",
+            }}
+          >
+            Master Mixer
+          </Typography>
+        </Box>
+        <Grid sx={{ width: "100%" }} display={{ xs: "none", sm: "inherit" }}>
+          {volume === 0 && <VolumeOff sx={{ color: "white" }} />}
+          {volume <= 33 && volume > 0 && <VolumeMute sx={{ color: "white" }} />}
+          {volume > 33 && volume <= 66 && (
+            <VolumeDown sx={{ color: "white" }} />
+          )}
+          {volume > 66 && <VolumeUp sx={{ color: "white" }} />}
+          <Slider
+            aria-label="Volume"
+            min={0}
+            max={100}
+            value={volume}
+            onChange={handleChange}
+          />
+        </Grid>
       </Stack>
     </Grid>
   );

@@ -17,6 +17,7 @@ import { Settings } from "@mui/icons-material";
 import MiniPlayer from "./MiniPlayer";
 import storage from "@/firebase/config";
 import { getDownloadURL, ref } from "firebase/storage";
+import MobileButton from "./MobileButton";
 
 export default function Console({ cb }: { cb: Function }) {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -50,6 +51,16 @@ export default function Console({ cb }: { cb: Function }) {
       setMasterPlay(true);
     }
   }, [lofiPlay, rainPlay]);
+
+  useEffect(() => {
+    if (lofiPlayer && lofiPlayer.current) {
+      lofiPlayer.current.volume = (lofiVolume / 100) * (masterVolume / 100);
+    }
+
+    if (rainPlayer && rainPlayer.current) {
+      rainPlayer.current.volume = (rainVolume / 100) * (masterVolume / 100);
+    }
+  }, [rainPlayer, lofiPlayer, masterVolume, rainVolume, lofiVolume]);
 
   const handleOpen =
     (newPlacement: PopperPlacementType) =>
@@ -131,37 +142,46 @@ export default function Console({ cb }: { cb: Function }) {
             </Fade>
           )}
         </Popper>
-
-        <Stack direction="row" alignItems="center">
-          <Box display={{ sm: "none" }}>
-            <IconButton
-              onClick={handleOpen("top-end")}
-              sx={{ color: "#2979ff" }}
+        <Box display={{ xs: "none", sm: "flex" }}>
+          <IconButton onClick={handleOpen("top-end")} sx={{ color: "#2979ff" }}>
+            <Settings />
+          </IconButton>
+        </Box>
+        <Grid display={{ sm: "none" }} item xs={12}>
+          <Stack spacing={2} direction="row" alignItems="center">
+            <MobileButton
+              player={lofiPlayer}
+              play={lofiPlay}
+              setPlay={setLofiPlay}
+            />
+            <Typography
+              align="center"
+              color={"white"}
+              display={{ sm: "none" }}
+              sx={{
+                fontFamily: "monospace",
+                fontSize: matches ? "1.5rem" : "1rem",
+              }}
             >
-              <Settings />
-            </IconButton>
-          </Box>
-          <Box display={{ xs: "none", sm: "flex" }}>
-            <IconButton
-              onClick={handleOpen("top-end")}
-              sx={{ color: "#2979ff" }}
+              Music
+            </Typography>
+            <MobileButton
+              player={rainPlayer}
+              play={rainPlay}
+              setPlay={setRainPlay}
+            />
+            <Typography
+              align="center"
+              color={"white"}
+              sx={{
+                fontFamily: "monospace",
+                fontSize: matches ? "1.5rem" : "1rem",
+              }}
             >
-              <Settings />
-            </IconButton>
-          </Box>
-          <Typography
-            align="center"
-            color={"white"}
-            display={{ sm: "none" }}
-            sx={{
-              fontFamily: "monospace",
-              fontSize: matches ? "1.5rem" : "1rem",
-              marginLeft: "1.5rem",
-            }}
-          >
-            Sound Settings
-          </Typography>
-        </Stack>
+              Rain
+            </Typography>
+          </Stack>
+        </Grid>
       </Grid>
       <Grid item xs={12} sm={2}>
         <Stack direction="row" alignItems="center">

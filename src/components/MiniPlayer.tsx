@@ -32,13 +32,6 @@ export default function MiniPlayer({
     }
     setPlay((prev: boolean) => !prev);
   };
-
-  useEffect(() => {
-    if (player && player.current) {
-      player.current.volume = (volume / 100) * (masterVolume / 100);
-    }
-  }, [player, volume, masterVolume]);
-
   return (
     <>
       <Typography
