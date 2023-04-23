@@ -32,6 +32,7 @@ export default function MiniPlayer({
     }
     setPlay((prev: boolean) => !prev);
   };
+
   return (
     <>
       <Typography
