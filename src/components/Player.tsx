@@ -32,6 +32,14 @@ export default function Player({
     setVolume(newValue as number);
   };
 
+  const mute = () => {
+    setVolume(0);
+  };
+
+  const unmute = () => {
+    setVolume(50);
+  };
+
   const changePlay = () => {
     setLofiPlay(!play);
     setRainPlay(!play);
@@ -77,18 +85,33 @@ export default function Player({
           </Typography>
         </Box>
         <Grid sx={{ width: "100%" }} display={{ xs: "none", sm: "inherit" }}>
-          {volume === 0 && <VolumeOff sx={{ color: "white" }} />}
-          {volume <= 33 && volume > 0 && <VolumeMute sx={{ color: "white" }} />}
-          {volume > 33 && volume <= 66 && (
-            <VolumeDown sx={{ color: "white" }} />
+          {volume === 0 && (
+            <div onClick={unmute}>
+              <VolumeOff sx={{ color: "white", cursor: "pointer" }} />
+            </div>
           )}
-          {volume > 66 && <VolumeUp sx={{ color: "white" }} />}
+          {volume <= 33 && volume > 0 && (
+            <div onClick={mute}>
+              <VolumeMute sx={{ color: "white", cursor: "pointer" }} />
+            </div>
+          )}
+          {volume > 33 && volume <= 66 && (
+            <div onClick={mute}>
+              <VolumeDown sx={{ color: "white", cursor: "pointer" }} />
+            </div>
+          )}
+          {volume > 66 && (
+            <div onClick={mute}>
+              <VolumeUp sx={{ color: "white", cursor: "pointer" }} />
+            </div>
+          )}
           <Slider
             aria-label="Volume"
             min={0}
             max={100}
             value={volume}
             onChange={handleChange}
+            sx={{ marginLeft: "1rem" }}
           />
         </Grid>
       </Stack>
