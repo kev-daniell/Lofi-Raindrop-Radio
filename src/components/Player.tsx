@@ -7,7 +7,15 @@ import {
   VolumeOff,
   VolumeMute,
 } from "@mui/icons-material";
-import { Stack, Slider, Grid, Box, Typography } from "@mui/material";
+import {
+  Stack,
+  Slider,
+  Grid,
+  Box,
+  Typography,
+  Tooltip,
+  IconButton,
+} from "@mui/material";
 
 export default function Player({
   play,
@@ -60,17 +68,17 @@ export default function Player({
     <Grid>
       <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
         {!play ? (
-          <div onClick={changePlay}>
+          <Tooltip onClick={changePlay} title="Play" placement="top">
             <PlayArrowIcon
               sx={{ fontSize: 40, color: "white", cursor: "pointer" }}
             />
-          </div>
+          </Tooltip>
         ) : (
-          <div onClick={changePlay}>
+          <Tooltip onClick={changePlay} title="Pause" placement="top">
             <PauseIcon
               sx={{ fontSize: 40, color: "white", cursor: "pointer" }}
             />
-          </div>
+          </Tooltip>
         )}
         <Box display={{ sm: "none" }}>
           <Typography
@@ -86,24 +94,24 @@ export default function Player({
         </Box>
         <Grid sx={{ width: "100%" }} display={{ xs: "none", sm: "inherit" }}>
           {volume === 0 && (
-            <div onClick={unmute}>
+            <Tooltip onClick={unmute} title="Unmute" placement="top">
               <VolumeOff sx={{ color: "white", cursor: "pointer" }} />
-            </div>
+            </Tooltip>
           )}
           {volume <= 33 && volume > 0 && (
-            <div onClick={mute}>
+            <Tooltip onClick={mute} title="Mute" placement="top">
               <VolumeMute sx={{ color: "white", cursor: "pointer" }} />
-            </div>
+            </Tooltip>
           )}
           {volume > 33 && volume <= 66 && (
-            <div onClick={mute}>
+            <Tooltip onClick={mute} title="Mute" placement="top">
               <VolumeDown sx={{ color: "white", cursor: "pointer" }} />
-            </div>
+            </Tooltip>
           )}
           {volume > 66 && (
-            <div onClick={mute}>
+            <Tooltip onClick={mute} title="Mute" placement="top">
               <VolumeUp sx={{ color: "white", cursor: "pointer" }} />
-            </div>
+            </Tooltip>
           )}
           <Slider
             aria-label="Volume"
