@@ -1,6 +1,6 @@
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
-import { Typography, Slider, Stack } from "@mui/material";
+import { Typography, Slider, Stack, Tooltip } from "@mui/material";
 import React, { useEffect } from "react";
 
 export default function MiniPlayer({
@@ -47,17 +47,17 @@ export default function MiniPlayer({
       </Typography>
       <Stack direction="row" spacing={2} alignItems="center">
         {!play ? (
-          <div onClick={changePlay}>
+          <Tooltip onClick={changePlay} title="Play" placement="top">
             <PlayArrowIcon
               sx={{ fontSize: 25, color: "white", cursor: "pointer" }}
             />
-          </div>
+          </Tooltip>
         ) : (
-          <div onClick={changePlay}>
+          <Tooltip onClick={changePlay} title="Pause" placement="top">
             <PauseIcon
               sx={{ fontSize: 25, color: "white", cursor: "pointer" }}
             />
-          </div>
+          </Tooltip>
         )}
         <Slider
           size="small"

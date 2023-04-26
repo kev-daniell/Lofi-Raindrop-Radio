@@ -4,9 +4,11 @@ import {
   Grid,
   IconButton,
   Paper,
+  Popover,
   Popper,
   PopperPlacementType,
   Stack,
+  Tooltip,
   Typography,
   useMediaQuery,
 } from "@mui/material";
@@ -21,8 +23,6 @@ import MobileButton from "./MobileButton";
 
 export default function Console({ cb }: { cb: Function }) {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-  const [open, setOpen] = useState(false);
-  const [placement, setPlacement] = useState<PopperPlacementType>();
   const rainPlayer = useRef<HTMLAudioElement>(null);
   const lofiPlayer = useRef<HTMLAudioElement>(null);
   const [lofiUrl, setLofiUrl] = useState<string>("");
@@ -62,13 +62,16 @@ export default function Console({ cb }: { cb: Function }) {
     }
   }, [rainPlayer, lofiPlayer, masterVolume, rainVolume, lofiVolume]);
 
-  const handleOpen =
-    (newPlacement: PopperPlacementType) =>
-    (event: React.MouseEvent<HTMLButtonElement>) => {
-      setAnchorEl(event.currentTarget);
-      setOpen((prev) => placement !== newPlacement || !prev);
-      setPlacement(newPlacement);
-    };
+  const handleOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popover" : undefined;
 
   const matches = useMediaQuery("(min-width:600px)");
 
@@ -105,47 +108,53 @@ export default function Console({ cb }: { cb: Function }) {
         />
       </Grid>
       <Grid item xs={12} sm={1} sx={{ marginRight: 0 }}>
-        <Popper
+        <Popover
+          id={id}
           open={open}
           anchorEl={anchorEl}
-          placement={placement}
-          transition
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "center",
+          }}
+          transformOrigin={{
+            vertical: "bottom",
+            horizontal: "right",
+          }}
         >
-          {({ TransitionProps }) => (
-            <Fade {...TransitionProps} timeout={350}>
-              <Paper
-                sx={{
-                  backgroundColor: "#121212",
-                  padding: "1rem",
-                  width: 200,
-                }}
-              >
-                <MiniPlayer
-                  title="Music"
-                  player={lofiPlayer}
-                  play={lofiPlay}
-                  setPlay={setLofiPlay}
-                  volume={lofiVolume}
-                  setVolume={setLofiVolume}
-                  masterVolume={masterVolume}
-                />
-                <MiniPlayer
-                  title="Rain Effect"
-                  player={rainPlayer}
-                  play={rainPlay}
-                  setPlay={setRainPlay}
-                  volume={rainVolume}
-                  setVolume={setRainVolume}
-                  masterVolume={masterVolume}
-                />
-              </Paper>
-            </Fade>
-          )}
-        </Popper>
+          <Paper
+            sx={{
+              backgroundColor: "#121212",
+              padding: "1rem",
+              width: 200,
+            }}
+          >
+            <MiniPlayer
+              title="Music"
+              player={lofiPlayer}
+              play={lofiPlay}
+              setPlay={setLofiPlay}
+              volume={lofiVolume}
+              setVolume={setLofiVolume}
+              masterVolume={masterVolume}
+            />
+            <MiniPlayer
+              title="Rain Effect"
+              player={rainPlayer}
+              play={rainPlay}
+              setPlay={setRainPlay}
+              volume={rainVolume}
+              setVolume={setRainVolume}
+              masterVolume={masterVolume}
+            />
+          </Paper>
+        </Popover>
         <Box display={{ xs: "none", sm: "flex" }}>
-          <IconButton onClick={handleOpen("top-end")} sx={{ color: "#2979ff" }}>
-            <Settings />
-          </IconButton>
+          <Tooltip title="Settings" placement="top">
+            <IconButton onClick={handleOpen} sx={{ color: "#2979ff" }}>
+              <Settings />
+            </IconButton>
+          </Tooltip>
         </Box>
         <Grid display={{ sm: "none" }} item xs={12}>
           <Stack spacing={2} direction="row" alignItems="center">
@@ -186,24 +195,28 @@ export default function Console({ cb }: { cb: Function }) {
       <Grid item xs={12} sm={2}>
         <Stack direction="row" alignItems="center">
           <Box display={{ sm: "none" }}>
-            <IconButton
-              sx={{ color: "#2979ff" }}
-              onClick={() => {
-                cb();
-              }}
-            >
-              <ChangeCircleIcon />
-            </IconButton>
+            <Tooltip title="Change Background" placement="top">
+              <IconButton
+                sx={{ color: "#2979ff" }}
+                onClick={() => {
+                  cb();
+                }}
+              >
+                <ChangeCircleIcon />
+              </IconButton>
+            </Tooltip>
           </Box>
           <Box display={{ xs: "none", sm: "flex" }}>
-            <IconButton
-              sx={{ color: "#2979ff" }}
-              onClick={() => {
-                cb();
-              }}
-            >
-              <ChangeCircleIcon />
-            </IconButton>
+            <Tooltip title="Change Background" placement="top">
+              <IconButton
+                sx={{ color: "#2979ff" }}
+                onClick={() => {
+                  cb();
+                }}
+              >
+                <ChangeCircleIcon />
+              </IconButton>
+            </Tooltip>
           </Box>
           <Typography
             align="center"
